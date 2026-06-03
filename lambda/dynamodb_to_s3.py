@@ -28,5 +28,15 @@ def lambda_handler(event, context):
                 "wind_speed": float(new_image["wind_speed"]["N"]),
                 "raw_data": new_image["raw_data"]["S"]
             }
-            
+
             records_to_save.append(item)
+    
+    if records_to_save:
+        now = datetime.now(timezone.utc)
+        file_name = (
+            f"weather-data/year={now.year}/"
+            f"month={now.month}/"
+            f"day={now.day}/"
+            f"weather_{now.strftime('%H-%M-%S')}.json"
+        )
+        
