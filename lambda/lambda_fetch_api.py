@@ -11,3 +11,8 @@ dynamodb = boto3.resource("dynamodb")
 
 # Get table name from environment variable
 table = dynamodb.Table(os.environ["DYNAMODB_TABLE"])
+
+
+# Get API key and city
+API_KEY = os.environ["OPENWEATHER_API_KEY"]
+CITY = os.environ.get("CITY", "Kochi")
