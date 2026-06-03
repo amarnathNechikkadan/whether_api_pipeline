@@ -40,3 +40,14 @@ def lambda_handler(event, context):
             f"weather_{now.strftime('%H-%M-%S')}.json"
         )
         
+        s3.put_object(
+            Bucket=BUCKET_NAME,
+            Key=file_name,
+            Body=json.dumps(records_to_save, default=decimal_default),
+            ContentType="application/json"
+        )
+
+    return {
+        "statusCode": 200,
+        "body": "DynamoDB stream records saved to S3 successfully"
+    }
