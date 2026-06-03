@@ -24,3 +24,8 @@ def lambda_handler(event, context):
         f"https://api.openweathermap.org/data/2.5/weather"
         f"?q={CITY}&appid={API_KEY}&units=metric"
     )
+
+    
+    # Fetch weather data
+    with urllib.request.urlopen(url) as response:
+        data = json.loads(response.read().decode())
