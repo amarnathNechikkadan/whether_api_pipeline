@@ -40,3 +40,11 @@ def lambda_handler(event, context):
         "wind_speed": Decimal(str(data["wind"]["speed"])),
         "raw_data": json.dumps(data)
     }
+    
+    # Insert into DynamoDB
+    table.put_item(Item=item)
+
+    return {
+        "statusCode": 200,
+        "body": "Weather data saved to DynamoDB successfully"
+    }
