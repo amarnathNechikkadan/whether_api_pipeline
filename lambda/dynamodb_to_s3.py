@@ -17,3 +17,14 @@ def lambda_handler(event, context):
     
     for record in event["Records"]:
         if record["eventName"] == "INSERT":
+            new_image = record["dynamodb"]["NewImage"]
+
+            item = {
+                "city": new_image["city"]["S"],
+                "timestamp": new_image["timestamp"]["S"],
+                "temperature": float(new_image["temperature"]["N"]),
+                "humidity": float(new_image["humidity"]["N"]),
+                "weather": new_image["weather"]["S"],
+                "wind_speed": float(new_image["wind_speed"]["N"]),
+                "raw_data": new_image["raw_data"]["S"]
+            }
