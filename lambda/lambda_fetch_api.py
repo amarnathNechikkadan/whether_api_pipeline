@@ -29,3 +29,14 @@ def lambda_handler(event, context):
     # Fetch weather data
     with urllib.request.urlopen(url) as response:
         data = json.loads(response.read().decode())
+        
+    # Prepare DynamoDB item
+    item = {
+        "city": CITY,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "temperature": Decimal(str(data["main"]["temp"])),
+        "humidity": Decimal(str(data["main"]["humidity"])),
+        "weather": data["weather"][0]["description"],
+        "wind_speed": Decimal(str(data["wind"]["speed"])),
+        "raw_data": json.dumps(data)
+    }
