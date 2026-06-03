@@ -28,3 +28,5 @@ def lambda_handler(event, context):
                 "wind_speed": float(new_image["wind_speed"]["N"]),
                 "raw_data": new_image["raw_data"]["S"]
             }
+            
+            records_to_save.append(item)
