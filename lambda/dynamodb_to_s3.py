@@ -14,3 +14,6 @@ def decimal_default(obj):
 
 def lambda_handler(event, context):
     records_to_save = []
+    
+    for record in event["Records"]:
+        if record["eventName"] == "INSERT":
