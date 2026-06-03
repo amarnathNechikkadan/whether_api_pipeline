@@ -11,3 +11,6 @@ def decimal_default(obj):
     if isinstance(obj, Decimal):
         return float(obj)
     raise TypeError
+
+def lambda_handler(event, context):
+    records_to_save = []
