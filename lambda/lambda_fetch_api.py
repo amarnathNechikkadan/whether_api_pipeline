@@ -16,3 +16,5 @@ table = dynamodb.Table(os.environ["DYNAMODB_TABLE"])
 # Get API key and city
 API_KEY = os.environ["OPENWEATHER_API_KEY"]
 CITY = os.environ.get("CITY", "Kochi")
+
+def lambda_handler(event, context):
