@@ -6,3 +6,8 @@ from decimal import Decimal
 
 s3 = boto3.client("s3")
 BUCKET_NAME = os.environ["S3_BUCKET"]
+
+def decimal_default(obj):
+    if isinstance(obj, Decimal):
+        return float(obj)
+    raise TypeError
