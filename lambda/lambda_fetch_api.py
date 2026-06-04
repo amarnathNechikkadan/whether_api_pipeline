@@ -1,0 +1,50 @@
+import json
+import os
+import boto3
+import urllib.request
+from datetime import datetime, timezone
+
+from decimal import Decimal
+
+# Connect to DynamoDB
+dynamodb = boto3.resource("dynamodb")
+
+# Get table name from environment variable
+table = dynamodb.Table(os.environ["DYNAMODB_TABLE"])
+
+
+# Get API key and city
+API_KEY = os.environ["OPENWEATHER_API_KEY"]
+CITY = os.environ.get("CITY", "Kochi")
+
+def lambda_handler(event, context):
+    
+    # OpenWeather API URL
+    url = (
+        f"https://api.openweathermap.org/data/2.5/weather"
+        f"?q={CITY}&appid={API_KEY}&units=metric"
+    )
+
+    
+    # Fetch weather data
+    with urllib.request.urlopen(url) as response:
+        data = json.loads(response.read().decode())
+        
+    # Prepare DynamoDB item
+    item = {
+        "city": CITY,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "temperature": Decimal(str(data["main"]["temp"])),
+        "humidity": Decimal(str(data["main"]["humidity"])),
+        "weather": data["weather"][0]["description"],
+        "wind_speed": Decimal(str(data["wind"]["speed"])),
+        "raw_data": json.dumps(data)
+    }
+    
+    # Insert into DynamoDB
+    table.put_item(Item=item)
+
+    return {
+        "statusCode": 200,
+        "body": "Weather data saved to DynamoDB successfully"
+    }
