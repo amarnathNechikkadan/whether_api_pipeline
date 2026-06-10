@@ -4,6 +4,10 @@ This project is an end-to-end cloud data pipeline that collects real-time weathe
 
 ## Architecture
 
+The following diagram shows the complete workflow of the weather analytics pipeline.
+
+![Weather Pipeline Architecture](images/architecture.png)
+
 ```text
 EventBridge
    ↓
