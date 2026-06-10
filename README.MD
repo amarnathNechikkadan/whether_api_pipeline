@@ -3,6 +3,8 @@
 AWS Lambda + DynamoDB + S3 + Snowflake project.
 
 ## Architecture
+The following diagram shows the complete workflow of the whether analytics pipeline.
+![Architecture](images/architecture.jpeg)
 
 EventBridge → Lambda → DynamoDB → DynamoDB Stream → Lambda → S3 → Snowflake
 
